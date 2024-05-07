@@ -6,19 +6,32 @@
         <title>俄罗斯方块</title>
         <style>
             #root {
-                position: relative;
+                display: flex;
+                justify-content: center;
+            }
+            #panel {
                 width: 300px;
                 height: 300px;
-                margin: 0 auto;
-                border: 1px solid #000;
                 background: #000;
+                position: relative;
+            }
+            #next {
+                position: relative;
+                width: 150px;
+                height: 150px;
             }
         </style>
     </head>
     <body>
-        <div id="root"></div>
+        <div id="root">
+            <div id="panel"></div>
+            <div id="tips">
+                <div id="next"></div>
+            </div>
+        </div>
         <div style="text-align: center">
-            <button id="rotate">旋转</button>
+            <button id="pause">暂停</button>
+            <button id="play">继续</button>
         </div>
     </body>
 </html>

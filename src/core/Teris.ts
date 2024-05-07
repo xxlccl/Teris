@@ -30,6 +30,11 @@ class LShape extends SquareGroup {
             _color
         );
     }
+
+    rotate(): void {
+        this.isClock = false;
+        super.rotate();
+    }
 }
 
 class LMirrorShape extends SquareGroup {
@@ -44,6 +49,11 @@ class LMirrorShape extends SquareGroup {
             _centerPoint,
             _color
         );
+    }
+
+    rotate(): void {
+        this.isClock = false;
+        super.rotate();
     }
 }
 
@@ -147,7 +157,6 @@ export const colors = [
     "pink",
     "brown",
     "black",
-    "white",
     "cyan",
     "magenta",
     "silver",
