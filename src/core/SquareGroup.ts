@@ -1,6 +1,9 @@
 import { Square } from "./Square";
-import { Point, Shape } from "./type";
+import { Shape, Point } from "./types";
 
+/**
+ * 组合方块
+ */
 export class SquareGroup {
     private _squares: readonly Square[];
 
@@ -8,22 +11,30 @@ export class SquareGroup {
         return this._squares;
     }
 
+    public get shape() {
+        return this._shape;
+    }
+
     public get centerPoint(): Point {
         return this._centerPoint;
     }
 
-    public get shape(): Shape {
-        return this._shape;
-    }
-
-    public set shape(v: Shape) {
-        this._shape = v;
-        this.setShape();
-    }
-
     public set centerPoint(v: Point) {
         this._centerPoint = v;
-        this.setShape();
+        //同时设置所有小方块对象的坐标
+        this.setSquarePoints();
+    }
+
+    /**
+     * 根据中心点坐标，以及形状，设置每一个小方块的坐标
+     */
+    private setSquarePoints() {
+        this._shape.forEach((p, i) => {
+            this._squares[i].point = {
+                x: this._centerPoint.x + p.x,
+                y: this._centerPoint.y + p.y,
+            };
+        });
     }
 
     constructor(
@@ -31,52 +42,45 @@ export class SquareGroup {
         private _centerPoint: Point,
         private _color: string
     ) {
+        //设置小方块的数组
         const arr: Square[] = [];
-
         this._shape.forEach((p) => {
             const sq = new Square();
             sq.color = this._color;
-            sq.point = {
-                x: this._centerPoint.x + p.x,
-                y: this._centerPoint.y + p.y,
-            };
-
             arr.push(sq);
         });
-
         this._squares = arr;
+        this.setSquarePoints();
     }
 
     /**
-     * 根据新的形状或者位置，更新每个方块的位置
+     * 旋转方向是否为顺时针
      */
-    private setShape() {
-        this._shape.forEach((p, index) => {
-            this._squares[index].point = {
-                x: this._centerPoint.x + p.x,
-                y: this._centerPoint.y + p.y,
-            };
-        });
-    }
-
     protected isClock = true;
 
     afterRotateShape(): Shape {
         if (this.isClock) {
-            return this.shape.map((s) => ({
-                x: -s.y,
-                y: s.x,
-            }));
+            return this._shape.map((p) => {
+                const newP: Point = {
+                    x: -p.y,
+                    y: p.x,
+                };
+                return newP;
+            });
         } else {
-            return this.shape.map((s) => ({
-                x: s.y,
-                y: -s.x,
-            }));
+            return this._shape.map((p) => {
+                const newP: Point = {
+                    x: p.y,
+                    y: -p.x,
+                };
+                return newP;
+            });
         }
     }
 
     rotate() {
-        const newS = this.afterRotateShape();
-        this.shape = newS;
+        const newShape = this.afterRotateShape();
+        this._shape = newShape;
+        this.setSquarePoints();
     }
 }

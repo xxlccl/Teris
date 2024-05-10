@@ -1,17 +1,17 @@
 import { Square } from "../Square";
-import { IViewer } from "../type";
 import $ from "jquery";
+import { IViewer } from "../types";
 import PageConfig from "./PageConfig";
 
 /**
- * 显示一个小方块道页面上
+ * 显示一个小方块到页面上
  */
 export class SquarePageViewer implements IViewer {
-    private dom: JQuery<HTMLElement>;
-    private isRemoved: boolean = false;
+    private dom?: JQuery<HTMLElement>;
+    private isRemove: boolean = false; //是否已经移除过
 
     show(): void {
-        if (this.isRemoved) {
+        if (this.isRemove) {
             return;
         }
         if (!this.dom) {
@@ -20,7 +20,7 @@ export class SquarePageViewer implements IViewer {
                     position: "absolute",
                     width: PageConfig.SquareSize.width,
                     height: PageConfig.SquareSize.height,
-                    border: "1px solid lightgray",
+                    border: "1px solid #ccc",
                     boxSizing: "border-box",
                 })
                 .appendTo(this.container);
@@ -28,13 +28,14 @@ export class SquarePageViewer implements IViewer {
         this.dom.css({
             left: this.square.point.x * PageConfig.SquareSize.width,
             top: this.square.point.y * PageConfig.SquareSize.height,
-            backgroundColor: this.square.color,
+            background: this.square.color,
         });
     }
+
     remove(): void {
-        if (this.dom && !this.isRemoved) {
+        if (this.dom && !this.isRemove) {
             this.dom.remove();
-            this.isRemoved = true;
+            this.isRemove = true;
         }
     }
 

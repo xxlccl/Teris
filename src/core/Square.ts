@@ -1,4 +1,4 @@
-import { IViewer, Point } from "./type";
+import { Point, IViewer } from "./types";
 
 /**
  * 小方块
@@ -8,10 +8,9 @@ export class Square {
         x: 0,
         y: 0,
     };
-
     private _color: string = "";
 
-    // 属性：显示者
+    //属性：显示者
     private _viewer?: IViewer;
 
     public get viewer() {
@@ -25,23 +24,22 @@ export class Square {
         }
     }
 
-    public get point(): Point {
+    public get point() {
         return this._point;
     }
-
-    public set point(value: Point) {
-        this._point = value;
-        // 设置新的位置后显示
+    public set point(val) {
+        this._point = val;
+        //完成显示
         if (this._viewer) {
             this._viewer.show();
         }
     }
 
-    public get color(): string {
+    public get color() {
         return this._color;
     }
 
-    public set color(color: string) {
-        this._color = color;
+    public set color(val) {
+        this._color = val;
     }
 }
