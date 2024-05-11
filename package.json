@@ -18,7 +18,5 @@
     "main": "index.js",
     "author": "xxlccl <a1023568249@gmail.com>",
     "license": "MIT",
-    "dependencies": {
-        "jquery": "^3.7.1"
-    }
+    "dependencies": {}
 }
